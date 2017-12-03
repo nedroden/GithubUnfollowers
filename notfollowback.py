@@ -1,10 +1,35 @@
 #!/usr/bin/env python3
 
+'''
+Github Unfollower Check
+-----------------------
+
+Checks which users are not following you back. To use,
+run this file from a terminal and provide the login name
+of the user you want to check.
+
+If desired, you can also import this module and call the
+'run' function with the username as a parameter.
+
+Version:    1.0.0
+Author:     Robert Monden <dev [at] robertmonden [dot] com>
+Copyright:  2017, Robert Monden
+
+License:    MIT
+
+'''
+
 import sys
 import json
 
 from urllib import request
 from urllib.error import *
+
+__author__ = 'Robert Monden'
+__copyright__ = 'Copyright 2017, Robert Monden'
+__license__ = 'MIT'
+__version__ = '1.0.0'
+__email__ = 'dev@robertmonden.com'
 
 headrs = {}
 
@@ -24,11 +49,8 @@ class HTTPRequest:
         return self.response.read().decode()
 
 
-def run():
-    check_params()
+def run(username):
     set_headers()
-
-    username = sys.argv[1]
 
     url = 'https://api.github.com/users/{0}'.format(username) \
         + '/{0}?per_page=100'
@@ -49,8 +71,8 @@ def run():
 def check_params():
     if len(sys.argv) is not 2:
         throw_error(
-            'Invalid number of parameters. \
-            Usage: ./notfollowback.py {username}',
+            'Invalid number of parameters.'
+            'Usage: ./notfollowback.py {username}',
             True
         )
 
@@ -74,4 +96,5 @@ def parse_all(usr_followers, usr_following):
 
 
 if __name__ == '__main__':
-    run()
+    check_params()
+    run(sys.argv[1])
